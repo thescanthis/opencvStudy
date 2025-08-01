@@ -14,12 +14,13 @@ private:
 
     void OnVideoPlay(wxCommandEvent& event);
     void OnStopVideo(wxCommandEvent& event);
+    void PauseVideo(wxCommandEvent& event);
 
     void OnClose(wxCloseEvent& event);
 
 private:
     wxButton* btnPlay,*btnImage;
-    wxButton* btnStop;
+    wxButton* btnStop,*Pause;
     VideoPanel* videoPanel;
     wxStaticText* statusText;
 

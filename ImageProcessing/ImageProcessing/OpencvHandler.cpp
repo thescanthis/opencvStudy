@@ -29,12 +29,24 @@ wxBitmap OpencvHandler::LoadImageAsBitmap(IMAGE_STATE Type, const std::string& p
 void OpencvHandler::LoadPlayVideo(const std::string& videoPath, VideoPanel* panel)
 {
     ExitChk = false;
+    StopFlag = false;
     cap.open(videoPath);
     if (!cap.isOpened())
         return;
 
     cv::Mat frame;
-    while (!StopFlag.load() && cap.read(frame)) {
+    while (!StopFlag.load()) {
+
+        // 재생 중인지 확인
+        {
+            auto& pauseFlag = this->PauseFlag;
+            auto& stopFlag = this->StopFlag;
+            std::unique_lock<std::mutex> lock(cvMtx);
+            cv.wait(lock, [&pauseFlag,&stopFlag] { return pauseFlag.load() || stopFlag.load(); });  // 재생 요청이 있을 때까지 대기
+            if (StopFlag.load()) break;
+        }
+
+        if (!cap.read(frame)) break;
 
         cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
        
@@ -59,5 +71,4 @@ void OpencvHandler::ObjectResize()
 {
     cv::Mat resized;
     cv::Size targetSize();
-
 }

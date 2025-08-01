@@ -20,7 +20,11 @@ public:
     void LoadPlayVideo(const std::string& videoPath, class VideoPanel* panel);
     void ObjectResize();
 
-    std::atomic<bool> StopFlag = false;
+    std::atomic<bool> StopFlag = false;           // 정지여부
+    std::atomic<bool> PauseFlag = false;          // 일시정지 여부
+    std::condition_variable cv;
+    std::mutex cvMtx;
+    cv::VideoCapture cap;                         // 재사용 가능하도록 멤버화
     bool ExitChk = true;
 };
 
