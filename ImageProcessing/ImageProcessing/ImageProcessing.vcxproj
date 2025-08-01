@@ -146,11 +146,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="VideoPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="OpencvHandler.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="VideoPanel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

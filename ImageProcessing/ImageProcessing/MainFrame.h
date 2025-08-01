@@ -1,29 +1,31 @@
 #pragma once
 #include <wx/timer.h>
+#include "VideoPanel.h"
+
+class OpencvHandler;
+
 class MainFrame : public wxFrame
 {
 public:
     MainFrame();
     ~MainFrame();
 private:
-    void OnButtonClicked(wxCommandEvent& event);
-    void OnClose(wxCloseEvent& event);
+    void OnImagePlay(wxCommandEvent& event);
 
     void OnVideoPlay(wxCommandEvent& event);
     void OnStopVideo(wxCommandEvent& event);
-    void OnReStart(wxCommandEvent& event);
-    void OnTimer(wxTimerEvent& event);
+
+    void OnClose(wxCloseEvent& event);
 
 private:
-    wxStaticText* text;
-    wxStaticBitmap* imageDisplay;
-    wxTimer* timer;
+    wxButton* btnPlay,*btnImage;
+    wxButton* btnStop;
+    VideoPanel* videoPanel;
+    wxStaticText* statusText;
 
-    cv::VideoCapture cap;
-    std::thread VideoUI;
-
-    wxPanel* videoPanel;
-    std::shared_ptr<class OpencvHandler> ImgHandler;
+    std::shared_ptr<OpencvHandler> ImgHandler;
+    std::thread VideoThread;
+    
     wxDECLARE_EVENT_TABLE();  // 이벤트 테이블 선언
 };
 

@@ -17,10 +17,10 @@ public:
 
     // 이미지 로드 후 wxBitmap으로 변환
     wxBitmap LoadImageAsBitmap(IMAGE_STATE Tpye, const std::string& path,const wxSize& targetSize);
-    void LoadPlayVideo(const std::string& videoPath, wxPanel* panel);
+    void LoadPlayVideo(const std::string& videoPath, class VideoPanel* panel);
+    void ObjectResize();
 
-    bool VideoFlag;
-    std::atomic<bool> PauseFlag;
-    std::atomic<int> ResumeFrame = 0;           // 정지한 시점 프레임 번호
+    std::atomic<bool> StopFlag = false;
+    bool ExitChk = true;
 };
 
