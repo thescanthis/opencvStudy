@@ -15,19 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="OpencvHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Appmain.cpp">
+    <ClCompile Include="VideoPanel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MainFrame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="VideoPanel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClInclude Include="OpencvHandler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MainFrame.h">
+    <ClInclude Include="VideoPanel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="VideoPanel.h">
+    <ClInclude Include="MainFrame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

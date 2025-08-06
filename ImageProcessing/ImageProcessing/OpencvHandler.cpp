@@ -12,11 +12,11 @@ OpencvHandler::~OpencvHandler()
 }
 
 wxBitmap OpencvHandler::LoadImageAsBitmap(IMAGE_STATE Type, const std::string& path, const wxSize& targetSize) {
-    cv::Mat img = cv::imread(path, Type); 
+    cv::Mat img = cv::imread(path, Type);
     if (img.empty()) return wxBitmap();
 
     cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
-    
+
     cv::Mat resized;
     cv::resize(img, resized, cv::Size(targetSize.GetWidth(), targetSize.GetHeight()));
 
@@ -42,22 +42,23 @@ void OpencvHandler::LoadPlayVideo(const std::string& videoPath, VideoPanel* pane
             auto& pauseFlag = this->PauseFlag;
             auto& stopFlag = this->StopFlag;
             std::unique_lock<std::mutex> lock(cvMtx);
-            cv.wait(lock, [&pauseFlag,&stopFlag] { return pauseFlag.load() || stopFlag.load(); });  // 재생 요청이 있을 때까지 대기
+            cv.wait(lock, [&pauseFlag, &stopFlag] { return pauseFlag.load() || stopFlag.load(); });  // 재생 요청이 있을 때까지 대기
             if (StopFlag.load()) break;
         }
 
         if (!cap.read(frame)) break;
 
         cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
-       
+
         cv::Mat resized;
         cv::resize(frame, resized, cv::Size(panel->GetSize().x, panel->GetSize().y));
 
         wxImage wxImg(resized.cols, resized.rows, resized.data, true);
         wxBitmap bmp(wxImg);
 
-        wxTheApp->CallAfter([panel, bmp]() {
-            if (panel && panel->IsShown()) {
+        std::weak_ptr<VideoPanel> weakPanel = panel->shared_from_this();
+        wxTheApp->CallAfter([weakPanel, bmp]() {
+            if (auto panel = weakPanel.lock()) {
                 panel->SetFrame(bmp);
             }
             });

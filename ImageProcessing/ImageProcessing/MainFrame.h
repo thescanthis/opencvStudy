@@ -18,15 +18,22 @@ private:
 
     void OnClose(wxCloseEvent& event);
 
+    void ThreadJoinAble();
+    void ThreadExit();
+    void OnSliderChaged(wxScrollEvent& event);
+    void OnSliderReleased(wxScrollEvent& event);
 private:
     wxButton* btnPlay,*btnImage;
     wxButton* btnStop,*Pause;
-    VideoPanel* videoPanel;
     wxStaticText* statusText;
+    wxSlider* videoSlider;
 
+    std::shared_ptr<VideoPanel> videoPanel;
     std::shared_ptr<OpencvHandler> ImgHandler;
     std::thread VideoThread;
-    
+    std::atomic<bool> isSeeking = false;
+    std::thread seekingThread;
+
     wxDECLARE_EVENT_TABLE();  // 이벤트 테이블 선언
 };
 
