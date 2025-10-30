@@ -151,35 +151,26 @@ void ImageCasting::OnPaint(wxPaintEvent&)
 
     if (!m_bitmap.IsOk()) return;
 
-    // 고품질 스케일링
+    const wxBitmap& bmpToDraw = m_scaled.IsOk() ? m_scaled : m_bitmap;
+    const wxPoint drawPos = m_scaled.IsOk() ? m_drawPos : wxPoint(0, 0);
+
     if (wxGraphicsContext* gc = wxGraphicsContext::Create(dc))
     {
-        const wxSize cs = GetClientSize();
-        const int bw = m_bitmap.GetWidth();
-        const int bh = m_bitmap.GetHeight();
-
-        const double sx = static_cast<double>(cs.x) / bw;
-        const double sy = static_cast<double>(cs.y) / bh;
-        const double s = std::min(sx, sy);
-
-        const double drawW = bw * s;
-        const double drawH = bh * s;
-        const double x = (cs.x - drawW) * 0.5;
-        const double y = (cs.y - drawH) * 0.5;
-
-        gc->DrawBitmap(m_bitmap, x, y, drawW, drawH);
+        gc->DrawBitmap(bmpToDraw,
+            drawPos.x,
+            drawPos.y,
+            bmpToDraw.GetWidth(),
+            bmpToDraw.GetHeight());
         delete gc;
     }
-    else
-    {
-        // 그래픽스 컨텍스트 생성 실패 시 기본 드로우
-        dc.DrawBitmap(m_bitmap, 0, 0, true);
+    else{
+        dc.DrawBitmap(bmpToDraw, drawPos.x, drawPos.y, true);
     }
 }
 
 void ImageCasting::OnSize(wxSizeEvent& e)
 {
-    RebuildScaled();      // 사이즈 바뀔 때만 새로 스케일
+    RebuildScaled(); 
     Refresh(false);
     e.Skip();
 }
@@ -187,8 +178,9 @@ void ImageCasting::OnSize(wxSizeEvent& e)
 
 void ImageCasting::RebuildScaled()
 {
-    m_scaled = wxBitmap(); // 비우기
+    m_scaled = wxBitmap(); // 
     m_drawPos = { 0,0 };
+    m_scale = 1.0;
     if (!m_bitmap.IsOk()) return;
 
     const wxSize cs = GetClientSize();
@@ -197,20 +189,30 @@ void ImageCasting::RebuildScaled()
     const int bw = m_bitmap.GetWidth();
     const int bh = m_bitmap.GetHeight();
 
-    // 비율 유지 스케일 (정수 픽셀로 반올림)
-    const double sx = (double)cs.x / bw;
-    const double sy = (double)cs.y / bh;
+    const double sx = static_cast<double>(cs.x) / bw;
+    const double sy = static_cast<double>(cs.y) / bh;
     const double s = std::min(sx, sy);
 
     const int dw = std::max(1, (int)std::floor(bw * s + 0.5));
     const int dh = std::max(1, (int)std::floor(bh * s + 0.5));
 
-    wxImage img = m_bitmap.ConvertToImage();
-    img = img.Scale(dw, dh, wxIMAGE_QUALITY_HIGH); // 여기서만 고품질 스케일
-    m_scaled = wxBitmap(img);
+    if (dw == bw && dh == bh)
+    {
+        m_scaled = m_bitmap;
+    }
+    else
+    {
+        wxImage img = m_bitmap.ConvertToImage();
+        img = img.Scale(dw, dh, wxIMAGE_QUALITY_HIGH);
+        m_scaled = wxBitmap(img);
+    }
 
-    // 중앙 배치 (정수 좌표)
-    m_drawPos.x = (cs.x - dw) / 2;
-    m_drawPos.y = (cs.y - dh) / 2;
+    if (m_scaled.IsOk() && bw > 0)
+        m_scale = static_cast<double>(m_scaled.GetWidth()) / bw;
+    else
+        m_scale = 1.0;
+
+    m_drawPos.x = (cs.x - m_scaled.GetWidth()) / 2;
+    m_drawPos.y = (cs.y - m_scaled.GetHeight()) / 2;
 }
 

@@ -2,7 +2,10 @@
 #include <wx/wx.h>
 #include <wx/statbmp.h>    // wxStaticBitmap
 #include <wx/dcbuffer.h>
+#include <wx/dcgraph.h>   // wxGCDC  ← 이거!
+#include <wx/graphics.h>  // (옵션) wxGraphicsContext
 #include <opencv2/opencv.hpp>
+
 #if _DEBUG
 #pragma comment (lib,"wxbase32ud.lib")
 #pragma comment (lib,"wxbase32ud_net.lib")

@@ -22,18 +22,16 @@ MainFrame::MainFrame()
     m_panel = new ImageCasting(this);
 
     // 오버레이는 캔버스의 자식으로 올려서 겹치게
-    m_Overay = new DragSelectionOverlay(m_panel,
+    m_Overay = std::make_shared<DragSelectionOverlay>(
+        m_panel, // ← 타겟
         [this](const wxRect& rClient) {
-            // client rect(=canvas 좌표) -> 원본 이미지 ROI로 변환
             cv::Rect roi;
             if (m_panel->ClientRectToImageRect(rClient, roi)) {
-                // 여기서 OCR/도형분석/저장 등 원하는 동작 수행
-                wxLogMessage("ROI(image): x=%d y=%d w=%d h=%d", roi.x, roi.y, roi.width, roi.height);
+                wxLogMessage("ROI(image): %d,%d %dx%d", roi.x, roi.y, roi.width, roi.height);
+                // TODO: OCR/도형 분석
             }
-            else {
-                wxLogMessage("유효하지 않은 ROI");
-            }
-        });
+        }
+    );
 
     // 이벤트 바인딩
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);

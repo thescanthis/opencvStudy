@@ -12,7 +12,7 @@ private:
 
 private:
     ImageCasting* m_panel;
-    DragSelectionOverlay* m_Overay;
+    std::shared_ptr<DragSelectionOverlay> m_Overay;
 
     std::vector<cv::Mat> m_pages;
 };
