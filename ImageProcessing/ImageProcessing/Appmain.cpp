@@ -1,12 +1,10 @@
 #include "pch.h"
 #include "MainFrame.h"
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
+
 
 class MyApp : public wxApp {
 public:
     virtual bool OnInit() {
-        _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);  // 자동 릭 체크
         wxInitAllImageHandlers(); // wxImage용 초기화
         
         frame = new MainFrame();

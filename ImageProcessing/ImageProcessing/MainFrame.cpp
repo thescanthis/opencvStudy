@@ -1,169 +1,91 @@
 #include "pch.h"
 #include "MainFrame.h"
-#include "OpencvHandler.h"
-
-wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
-EVT_BUTTON(1000, MainFrame::OnImagePlay)
-EVT_BUTTON(1001, MainFrame::OnVideoPlay)
-EVT_BUTTON(1002, MainFrame::OnStopVideo)
-EVT_BUTTON(1003, MainFrame::PauseVideo)
-EVT_CLOSE(MainFrame::OnClose)
-wxEND_EVENT_TABLE()
+#include "PdfLoader.h"
 
 MainFrame::MainFrame()
-    : wxFrame(nullptr, wxID_ANY, "OpenCV 연동", wxDefaultPosition, wxSize(800, 600)) {
+    : wxFrame(nullptr, wxID_ANY, "OpenCV 연동", wxDefaultPosition, wxSize(800, 600)) 
+{
+    // 메뉴
+    wxMenu* fileMenu = new wxMenu;
+    fileMenu->Append(wxID_OPEN, "&Open...\tCtrl+O");
+    fileMenu->AppendSeparator();
+    fileMenu->Append(wxID_EXIT, "E&xit");
 
-    ImgHandler = std::make_shared<OpencvHandler>();
+    wxMenuBar* menuBar = new wxMenuBar;
+    menuBar->Append(fileMenu, "&File");
+    SetMenuBar(menuBar);
 
-    wxBoxSizer* Mainsizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer* btnSizer = new wxBoxSizer(wxHORIZONTAL);  // 버튼만 가로 배치
-    btnImage = new wxButton(this, 1000, "이미지 재생");
-    btnPlay = new wxButton(this, 1001, "영상 재생");
-    btnStop = new wxButton(this, 1002, "중단");
-    Pause = new wxButton(this, 1003, "멈춤");
-    videoPanel = std::make_shared<VideoPanel>(this);
-    statusText = new wxStaticText(this, wxID_ANY, "상태: 대기중");
-    videoSlider = new wxSlider(this, wxID_ANY, 0, 0,1000);
+    CreateStatusBar();
+    SetStatusText("Ready");
 
-    Layout();
-    btnSizer->Add(btnImage, 0, wxALL, 5);
-    btnSizer->Add(btnPlay, 0, wxALL, 5);
-    btnSizer->Add(btnStop, 0, wxALL, 5);
-    btnSizer->Add(Pause, 0, wxALL, 5);
+    // 이미지 패널
+    m_panel = new ImageCasting(this);
 
-    Mainsizer->Add(btnSizer, 0, wxALIGN_CENTER);
-    Mainsizer->Add(videoPanel.get(), 1, wxALL | wxEXPAND, 5);
-    Mainsizer->Add(videoSlider, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 5);
-    Mainsizer->Add(statusText, 0, wxALL, 5);
+    // 오버레이는 캔버스의 자식으로 올려서 겹치게
+    m_Overay = new DragSelectionOverlay(m_panel,
+        [this](const wxRect& rClient) {
+            // client rect(=canvas 좌표) -> 원본 이미지 ROI로 변환
+            cv::Rect roi;
+            if (m_panel->ClientRectToImageRect(rClient, roi)) {
+                // 여기서 OCR/도형분석/저장 등 원하는 동작 수행
+                wxLogMessage("ROI(image): x=%d y=%d w=%d h=%d", roi.x, roi.y, roi.width, roi.height);
+            }
+            else {
+                wxLogMessage("유효하지 않은 ROI");
+            }
+        });
 
-    videoSlider->Bind(wxEVT_SCROLL_THUMBTRACK, &MainFrame::OnSliderChaged, this);     // 드래그 중
-    videoSlider->Bind(wxEVT_SCROLL_CHANGED, &MainFrame::OnSliderReleased, this);
-    SetSizer(Mainsizer);
+    // 이벤트 바인딩
+    Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
+    Bind(wxEVT_MENU, [&](wxCommandEvent&) { Close(true); }, wxID_EXIT);
 }
 
 MainFrame::~MainFrame()
 {
     std::cout << "~MainFrame() 호출됨\n";
 
-    ThreadExit();
-    wxTheApp->Yield();       // 남은 이벤트 실행
-    wxTheApp->ProcessIdle(); // 이벤트 큐 비우기
 }
 
-void MainFrame::OnImagePlay(wxCommandEvent&) {
-    statusText->SetLabel("OpenCV로 이미지 불러오는 중...");
-    
-    wxBitmap bmp = ImgHandler->LoadImageAsBitmap(ImgHandler->IMAGE_GRAYSCALE,"../x64/Debug/sample.jpg", videoPanel->GetSize());
-    videoPanel->SetFrame(bmp);
-}   
-
-void MainFrame::OnVideoPlay(wxCommandEvent& event)
+void MainFrame::OnOpen(wxCommandEvent&)
 {
-    if (!ImgHandler->ExitChk)
+    wxFileDialog dlg(this, "파일 열기", "", "",
+        "PDF 및 이미지 파일 (*.pdf;*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff)|*.pdf;*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff",
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+    if (dlg.ShowModal() != wxID_OK)
         return;
 
-    videoSlider->SetValue(0);
-    statusText->SetLabel("영상 불러오는 중...");
-    ThreadJoinAble();
+    wxString path = dlg.GetPath();
+    wxString ext = path.AfterLast('.').Lower();
 
-    ImgHandler->PauseFlag.store(true);
-    VideoThread = std::thread([&handler = ImgHandler, &VideoPanel = videoPanel,&Slider = videoSlider](){
-            handler->LoadPlayVideo("../x64/Debug/LoadCar1.mp4", VideoPanel.get());
-        });
-       
-    ImgHandler->cv.notify_one();
-}
+    if (ext == "pdf")
+    {
+        SetStatusText("PDF 로딩 중...");
 
-void MainFrame::OnStopVideo(wxCommandEvent& event)
-{
-    statusText->SetLabel("정지 요청됨");
-    ThreadExit();
-
-    wxTheApp->CallAfter([this]() {
-        videoPanel->ClearFrame();
-        });
-}
-
-void MainFrame::PauseVideo(wxCommandEvent& event)
-{
-    bool newState = !ImgHandler->PauseFlag.load();
-    ImgHandler->PauseFlag.store(newState);
-
-    wxButton* btn = dynamic_cast<wxButton*>(event.GetEventObject());
-    if (btn) {
-        btn->SetLabel(newState ? "일시정지" : "재생");
-    }
-
-    if (newState)
-        ImgHandler->cv.notify_one();
-}
-
-void MainFrame::OnClose(wxCloseEvent& event)
-{
-    std::cout << "MainFrame 종료\n";
-    event.Skip();
-}
-
-void MainFrame::ThreadJoinAble()
-{
-    if (VideoThread.joinable())
-        VideoThread.join();  // 반드시 먼저 기다려야 함
-}
-
-void MainFrame::ThreadExit()
-{
-    ImgHandler->StopFlag.store(true);
-    ImgHandler->cv.notify_one();
-    ThreadJoinAble();
-}
-
-void MainFrame::OnSliderChaged(wxScrollEvent& event)
-{
-    if (!ImgHandler || !ImgHandler->cap.isOpened())
-         return;
-
-    if (isSeeking.load()) return;
-
-    ImgHandler->PauseFlag.store(false);
-    isSeeking.store(true);
-
-    seekingThread = std::thread([&isSeeking= isSeeking, videoSlider= videoSlider,&ImgHandler= ImgHandler,&videoPanel= videoPanel]() {
-        
-        while (isSeeking)
+        m_pages = LoadPdfAllPages_Poppler(path.wc_str(), 200);
+        if (m_pages.empty())
         {
-            cv::Mat frame;
-            int frameIdx = videoSlider->GetValue();
-            {
-                std::lock_guard<std::mutex> _lock(ImgHandler->capMtx);
-                ImgHandler->cap.set(cv::CAP_PROP_POS_FRAMES, frameIdx);
-                ImgHandler->cap >> frame;
-            }
-
-            if (!frame.empty())
-            {
-                wxImage wxImg(frame.cols, frame.rows, frame.data, true);
-                wxBitmap bmp(wxImg);
-
-                wxTheApp->CallAfter([panel = videoPanel, bmp]() {
-                    panel->SetFrame(bmp);
-                    });
-            }
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));  // 20fps 정도
+            wxMessageBox("PDF를 불러오지 못했습니다.", "오류", wxOK | wxICON_ERROR);
+            SetStatusText("PDF 로드 실패");
+            return;
         }
+
+        // 첫 페이지 표시
+        m_panel->SetImage(m_pages[0]);
+        SetStatusText(wxString::Format("PDF 로드 완료 (%d 페이지)", (int)m_pages.size()));
+    }
+    else
+    {
+        cv::Mat img = cv::imread(path.ToStdString(), cv::IMREAD_UNCHANGED);
+        if (img.empty())
+        {
+            wxMessageBox("이미지를 불러오지 못했습니다.", "오류", wxOK | wxICON_ERROR);
+            SetStatusText("이미지 로드 실패");
+            return;
         }
-    );
-}
 
-void MainFrame::OnSliderReleased(wxScrollEvent& event)
-{
-    if (!ImgHandler || !ImgHandler->cap.isOpened()) return;
-
-    isSeeking.store(false);
-
-    if (seekingThread.joinable())
-        seekingThread.join();  // 시킹 스레드 종료
-
-    ImgHandler->PauseFlag.store(true);  // 재생 재개
-    ImgHandler->cv.notify_one();         // 재생 쓰레드 깨움
+        m_pages.clear();
+        m_panel->SetImage(img);
+        SetStatusText(wxString::Format("이미지 로드 완료: %s", dlg.GetFilename()));
+    }
 }

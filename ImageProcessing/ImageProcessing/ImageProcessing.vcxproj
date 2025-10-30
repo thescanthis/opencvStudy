@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f4e0ee16-cfa7-4932-94f9-17dfcf258e0e}</ProjectGuid>
+    <ProjectGuid>{56d0819e-8846-4530-beb4-8aeafa872628}</ProjectGuid>
     <RootNamespace>ImageProcessing</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -70,21 +70,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Lib\wxWidgets\include;C:\Lib\wxWidgets\lib\vc_x64_lib\mswud;C:\Lib\opencv4\install\include;C:\Lib\opencv4\install\include\opencv2;C:\Lib\WebP\src;C:\Lib\WebP\src\webp;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Lib\wxWidgets\lib\vc_x64_lib;C:\Lib\opencv-4\vc17\lib;C:\Lib\WebP\Release;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Lib\wxWidgets\include;C:\Lib\wxWidgets\lib\vc_x64_lib\mswud;C:\Lib\opencv4\install\include;C:\Lib\opencv4\install\include\opencv2;C:\Lib\WebP\src;C:\Lib\WebP\src\webp;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Lib\wxWidgets\lib\vc_x64_lib;C:\Lib\opencv-4\vc17\lib;C:\Lib\WebP\Release;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Lib\wxWidgets\include;C:\Lib\wxWidgets\lib\vc_x64_lib\mswud;C:\Lib\opencv4\install\include;C:\Lib\opencv4\install\include\opencv2;C:\Lib\WebP\src;C:\Lib\WebP\src\webp;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Lib\wxWidgets\lib\vc_x64_lib;C:\Lib\opencv-4\vc17\lib;C:\Lib\WebP\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\AIND_Library\wxWidgets\include;C:\AIND_Library\wxWidgets\lib\vc_x64_lib\mswud;C:\Lib\opencv4\install\include;C:\Lib\opencv4\install\include\opencv2;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\AIND_Library\wxWidgets\lib\vc_x64_lib;C:\Lib\opencv4\install\x64\vc17\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Lib\wxWidgets\include;C:\Lib\wxWidgets\lib\vc_x64_lib\mswud;C:\Lib\opencv4\install\include;C:\Lib\opencv4\install\include\opencv2;C:\Lib\WebP\src;C:\Lib\WebP\src\webp;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Lib\wxWidgets\lib\vc_x64_lib;C:\Lib\opencv-4\vc17\lib;C:\Lib\WebP\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\AIND_Library\wxWidgets\include;C:\AIND_Library\wxWidgets\lib\vc_x64_lib\mswud;C:\Lib\opencv4\install\include;C:\Lib\opencv4\install\include\opencv2;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\AIND_Library\wxWidgets\lib\vc_x64_lib;C:\Lib\opencv4\install\x64\vc17\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,11 +84,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -108,13 +98,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -126,6 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,35 +129,32 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Appmain.cpp" />
+    <ClCompile Include="DragSelectionOverlay.cpp" />
+    <ClCompile Include="ImageUtils.cpp" />
     <ClCompile Include="MainFrame.cpp" />
-    <ClCompile Include="OpencvHandler.cpp" />
     <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="VideoPanel.cpp" />
+    <ClCompile Include="PdfLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DragSelectionOverlay.h" />
+    <ClInclude Include="ImageUtils.h" />
     <ClInclude Include="MainFrame.h" />
-    <ClInclude Include="OpencvHandler.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="VideoPanel.h" />
+    <ClInclude Include="PdfLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
