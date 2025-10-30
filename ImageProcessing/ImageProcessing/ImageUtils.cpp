@@ -81,10 +81,16 @@ wxBitmap ImageCasting::CvMatToWxBitmap(const cv::Mat& src)
 
         // 알파 버퍼 할당 후 행 단위 복사
         img.SetAlpha(new unsigned char[rgb.cols * rgb.rows]);
+        const size_t pixelCount = static_cast<size_t>(rgb.cols) * static_cast<size_t>(rgb.rows);
+        auto alphaBuffer = std::make_unique<unsigned char[]>(pixelCount);
+        
         for (int y = 0; y < alpha.rows; ++y)
-            std::memcpy(img.GetAlpha() + y * alpha.cols,
+        {
+            std::memcpy(alphaBuffer.get() + static_cast<size_t>(y) * static_cast<size_t>(alpha.cols),
                 alpha.ptr<unsigned char>(y),
-                alpha.cols);
+                static_cast<size_t>(alpha.cols));
+        }
+        img.SetAlpha(alphaBuffer.release());
 
         return wxBitmap(img);
     }

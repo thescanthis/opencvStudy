@@ -11,7 +11,7 @@ private:
     void OnOpen(wxCommandEvent&);
 
 private:
-    ImageCasting* m_panel;
+    ImageCasting* m_panel = nullptr;
     std::shared_ptr<DragSelectionOverlay> m_Overay;
 
     std::vector<cv::Mat> m_pages;
