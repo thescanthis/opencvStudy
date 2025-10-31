@@ -1,134 +1,381 @@
 #include "pch.h"
-// ShapeExtractor.cpp
 #include "ShapeExtractor.h"
-#include <wx/log.h>
 
-void ShapeExtractor::Analyze(const cv::Mat& roi)
+#include <algorithm>
+#include <cmath>
+#include <string>
+#include <utility>
+
+using Shape = ShapeExtractor::DetectedShape;
+
+namespace
 {
-    m_lines.clear();
-    m_circles.clear();
-    m_contours.clear();
-
-    if (roi.empty()) return;
-
-    // 1) GRAY
-    cv::Mat gray;
-    if (roi.channels() == 3)      cv::cvtColor(roi, gray, cv::COLOR_BGR2GRAY);
-    else if (roi.channels() == 4) cv::cvtColor(roi, gray, cv::COLOR_BGRA2GRAY);
-    else                          gray = roi.clone();
-
-    // 2) 대비 보정 + 이진화 (도면 최적화)
-    cv::Mat eq;
-    cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(2.0, cv::Size(8, 8));
-    clahe->apply(gray, eq);
-
-    cv::Mat bin;
-    cv::threshold(eq, bin, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
-
-    // 흰 배경/검은 선이 아니라면 반전
-    if (cv::countNonZero(bin) > (int)bin.total() / 2) cv::bitwise_not(bin, bin);
-
-    const int W = bin.cols, H = bin.rows;
-    const int shortDim = std::min(W, H);
-
-    // 3) 수평/수직 분리(모폴로지로 얇은 잡선 제거)
-    int kx = std::max(15, W / 60);  // 수평 라인 커널 길이
-    int ky = std::max(15, H / 60);  // 수직 라인 커널 길이
-
-    cv::Mat horiz, vert;
-    cv::erode(bin, horiz, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(kx, 1)));
-    cv::dilate(horiz, horiz, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(kx, 1)));
-
-    cv::erode(bin, vert, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(1, ky)));
-    cv::dilate(vert, vert, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(1, ky)));
-
-    // 4) 라인 검출 (길이/틈 제한으로 난사 방지)
-    const double minLen = std::max(40.0, 0.25 * shortDim);           // 최소 길이
-    const int    thr = 80;                                        // 누적 임계
-    const int    maxGap = std::max(4, shortDim / 200);               // 단절 허용
-
-    std::vector<cv::Vec4i> hl, vl;
-    cv::HoughLinesP(horiz, hl, 1, CV_PI / 180, thr, minLen, maxGap);
-    cv::HoughLinesP(vert, vl, 1, CV_PI / 180, thr, minLen, maxGap);
-
-    auto pushLine = [&](const cv::Vec4i& L) {
-        cv::Point a(L[0], L[1]), b(L[2], L[3]);
-        double len = cv::norm(a - b);
-        if (len < minLen) return;
-        // 각도를 0/90°로 스냅 (도면 특성)
-        double ang = std::atan2(double(b.y - a.y), double(b.x - a.x));
-        double deg = ang * 180.0 / CV_PI;
-        if (std::abs(std::sin(ang)) < 0.173) { // ~10도 이내면 수평으로
-            b.y = a.y; ang = 0.0;
-        }
-        else if (std::abs(std::cos(ang)) < 0.173) { // ~10도 이내면 수직으로
-            b.x = a.x; ang = CV_PI / 2;
-        }
-        m_lines.push_back({ a,b,cv::norm(a - b),ang });
-        };
-    for (auto& L : hl) pushLine(L);
-    for (auto& L : vl) pushLine(L);
-
-    // 5) 원 검출 (커넥터 핀/라벨 원 등)
-    std::vector<cv::Vec3f> cs;
-    const int minR = std::max(3, shortDim / 120);
-    const int maxR = std::max(minR + 2, shortDim / 35);
-    cv::HoughCircles(gray, cs, cv::HOUGH_GRADIENT, 1.2,
-        shortDim / 15,   // 최소 중심 간격
-        120, 30,       // Canny 상/누적 임계
-        minR, maxR);
-    for (auto& c : cs)
-        m_circles.push_back({ cv::Point(cvRound(c[0]), cvRound(c[1])), c[2] });
-
-    // 6) 사각형/폐영역 후보 (외곽 잡음 줄이기 위해 bin 사용)
-    std::vector<std::vector<cv::Point>> cnts;
-    cv::findContours(bin, cnts, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-    for (auto& c : cnts)
+    cv::Point ClampPoint(const cv::Point& pt, const cv::Size& size)
     {
-        double area = cv::contourArea(c);
-        if (area < 25.0) continue;                            // 너무 작은 잡음 제거
-
-        std::vector<cv::Point> poly;
-        cv::approxPolyDP(c, poly, 0.02 * cv::arcLength(c, true), true);
-        cv::Rect r = cv::boundingRect(c);
-        if (r.width < 5 || r.height < 5) continue;
-        m_contours.push_back({ r, area });       // 참고용(디버그)
-        if (poly.size() == 4 && cv::isContourConvex(poly)) {
-            // 라벨 박스/패드류로 간주
-            m_rects.push_back({ r, area });
-            
+        cv::Point clamped = pt;
+        if (size.width > 0) {
+            clamped.x = std::clamp(clamped.x, 0, size.width - 1);
         }
+        if (size.height > 0) {
+            clamped.y = std::clamp(clamped.y, 0, size.height - 1);
+        }
+        return clamped;
     }
 }
 
-void ShapeExtractor::DebugPrint() const
+double ShapeExtractor::LineSegment::Length() const
 {
-    wxLogMessage("ShapeExtractor Debug:");
-    wxLogMessage("  Lines: %zu  Circles: %zu  Contours: %zu  Rects: %zu",
-        m_lines.size(), m_circles.size(), m_contours.size(), m_rects.size());
-
-    for (size_t i = 0; i < m_lines.size(); ++i)
-        wxLogMessage("  L%zu: (%d,%d)-(%d,%d) len=%.1f angle=%.1f",
-            i, m_lines[i].p1.x, m_lines[i].p1.y, m_lines[i].p2.x, m_lines[i].p2.y,
-            m_lines[i].length, m_lines[i].angle * 180.0 / M_PI);
+    const double dx = static_cast<double>(p1.x - p2.x);
+    const double dy = static_cast<double>(p1.y - p2.y);
+    return std::sqrt(dx * dx + dy * dy);
 }
 
-cv::Mat ShapeExtractor::BuildMask(const cv::Size& sz, int lineThick, int circleThick, bool fillRects) const
+cv::Rect ShapeExtractor::LineSegment::BoundingRect(int padding, const cv::Size& limit) const
 {
-    cv::Mat mask(sz, CV_8UC1, cv::Scalar(0));
-        // 라인
-        for (const auto& L : m_lines)
-         cv::line(mask, L.p1, L.p2, cv::Scalar(255), std::max(1, lineThick), cv::LINE_AA);
-        // 원
-        for (const auto& C : m_circles)
-         cv::circle(mask, C.center, (int)std::round(C.radius), cv::Scalar(255),
-            +std::max(1, circleThick), cv::LINE_AA);
-        // 사각형(패드/라벨 박스)
-        for (const auto& R : m_rects) {
-            if (fillRects) cv::rectangle(mask, R.r, cv::Scalar(255), cv::FILLED);
-            else           cv::rectangle(mask, R.r, cv::Scalar(255), 1);
-        
+    std::vector<cv::Point> points{ ClampPoint(p1, limit), ClampPoint(p2, limit) };
+    cv::Rect rect = cv::boundingRect(points);
+    if (padding > 0) {
+        rect.x -= padding;
+        rect.y -= padding;
+        rect.width += padding * 2;
+        rect.height += padding * 2;
+    }
+    if (limit.width > 0) {
+        rect.x = std::max(0, std::min(rect.x, limit.width));
+        int maxWidth = std::max(0, limit.width - rect.x);
+        rect.width = std::clamp(rect.width, 0, maxWidth);
+    }
+    if (limit.height > 0) {
+        rect.y = std::max(0, std::min(rect.y, limit.height));
+        int maxHeight = std::max(0, limit.height - rect.y);
+        rect.height = std::clamp(rect.height, 0, maxHeight);
+    }
+    return rect;
+}
+
+cv::Rect ShapeExtractor::Circle::BoundingRect(int padding, const cv::Size& limit) const
+{
+    cv::Rect rect(center.x - radius, center.y - radius, radius * 2, radius * 2);
+    if (padding > 0) {
+        rect.x -= padding;
+        rect.y -= padding;
+        rect.width += padding * 2;
+        rect.height += padding * 2;
+    }
+    if (limit.width > 0) {
+        int right = std::min(limit.width, rect.x + rect.width);
+        rect.x = std::clamp(rect.x, 0, limit.width);
+        rect.width = std::max(0, right - rect.x);
+    }
+    if (limit.height > 0) {
+        int bottom = std::min(limit.height, rect.y + rect.height);
+        rect.y = std::clamp(rect.y, 0, limit.height);
+        rect.height = std::max(0, bottom - rect.y);
+    }
+    return rect;
+}
+
+ShapeExtractor::ShapeExtractor(const Params& params)
+    : params_(params)
+{
+}
+
+std::vector<Shape> ShapeExtractor::Extract(const cv::Mat& input) const
+{
+    if (input.empty()) {
+        return {};
+    }
+
+    cv::Mat gray;
+    if (input.channels() == 3) {
+        cv::cvtColor(input, gray, cv::COLOR_BGR2GRAY);
+    }
+    else if (input.channels() == 4) {
+        cv::cvtColor(input, gray, cv::COLOR_BGRA2GRAY);
+    }
+    else {
+        gray = input.clone();
+    }
+
+    cv::Mat blurred;
+    cv::GaussianBlur(gray, blurred, cv::Size(5, 5), 0);
+
+    cv::Mat edges;
+    cv::Canny(blurred, edges, params_.cannyLower, params_.cannyUpper);
+
+    cv::Mat binary;
+    cv::adaptiveThreshold(blurred, binary, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY_INV, 35, 5);
+
+    cv::Mat labels, stats, centroids;
+    int numLabels = cv::connectedComponentsWithStats(binary, labels, stats, centroids);
+
+    cv::Mat filtered = cv::Mat::zeros(binary.size(), CV_8UC1);
+    const double imageArea = static_cast<double>(binary.total());
+    const int minArea = std::max(20, static_cast<int>(imageArea * params_.minComponentAreaRatio));
+    const int shorterDim = std::min(binary.cols, binary.rows);
+    const int minDimThreshold = std::max(8, static_cast<int>(shorterDim * 0.04));
+
+    for (int label = 1; label < numLabels; ++label) {
+        int area = stats.at<int>(label, cv::CC_STAT_AREA);
+        int width = stats.at<int>(label, cv::CC_STAT_WIDTH);
+        int height = stats.at<int>(label, cv::CC_STAT_HEIGHT);
+
+        if (area >= minArea || width >= minDimThreshold || height >= minDimThreshold) {
+            cv::Mat mask = (labels == label);
+            mask.convertTo(mask, CV_8UC1, 255);
+            filtered |= mask;
         }
-    return mask;
+    }
+
+    if (cv::countNonZero(filtered) > 0) {
+        cv::bitwise_and(edges, filtered, edges);
+    }
+
+    cv::Mat morphKernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+    cv::dilate(edges, edges, morphKernel);
+    cv::erode(edges, edges, morphKernel);
+
+    int minLineLength = std::max(20, static_cast<int>(shorterDim * params_.minLineLengthRatio));
+    int maxLineGap = std::max(5, static_cast<int>(shorterDim * params_.maxLineGapRatio));
+    int houghThreshold = std::max(25, static_cast<int>(shorterDim * 0.08));
+
+    std::vector<cv::Vec4i> rawLines;
+    cv::HoughLinesP(edges, rawLines, 1.0, CV_PI / 180.0, houghThreshold, minLineLength, maxLineGap);
+
+    std::vector<LineSegment> lines;
+    lines.reserve(rawLines.size());
+    for (const cv::Vec4i& l : rawLines) {
+        LineSegment seg{ {l[0], l[1]}, {l[2], l[3]} };
+        if (seg.Length() >= minLineLength) {
+            lines.push_back(seg);
+        }
+    }
+
+    double minRadiusF = std::max(8.0, shorterDim * params_.minCircleRadiusRatio);
+    double maxRadiusF = std::max(minRadiusF + 5.0, shorterDim * params_.maxCircleRadiusRatio);
+    double minDist = std::max(25.0, shorterDim * 0.25);
+
+    std::vector<cv::Vec3f> rawCircles;
+    cv::HoughCircles(blurred, rawCircles, cv::HOUGH_GRADIENT, 1.0, minDist, params_.circleCannyHigh, params_.circleAccumulator,
+        static_cast<int>(minRadiusF), static_cast<int>(maxRadiusF));
+
+    std::vector<Circle> circles;
+    circles.reserve(rawCircles.size());
+    for (const cv::Vec3f& c : rawCircles) {
+        Circle circle{ cv::Point(cvRound(c[0]), cvRound(c[1])), cvRound(c[2]) };
+        if (circle.radius <= 0) {
+            continue;
+        }
+        cv::Rect roi = circle.BoundingRect(0, gray.size());
+        if (roi.width <= 0 || roi.height <= 0) {
+            continue;
+        }
+        if (cv::countNonZero(filtered) > 0) {
+            cv::Mat mask = filtered(roi);
+            double filled = cv::countNonZero(mask);
+            double expected = CV_PI * circle.radius * circle.radius;
+            if (expected > 0 && filled / expected < 0.35) {
+                continue;
+            }
+        }
+        circles.push_back(circle);
+    }
+
+    std::vector<Shape> results;
+    results.reserve(lines.size() + circles.size());
+
+    std::vector<bool> lineUsed(lines.size(), false);
+    std::vector<bool> circleUsed(circles.size(), false);
+
+    for (size_t ci = 0; ci < circles.size(); ++ci) {
+        const Circle& circle = circles[ci];
+        cv::Rect circleRect = circle.BoundingRect(4, gray.size());
+
+        for (size_t li = 0; li < lines.size(); ++li) {
+            if (lineUsed[li]) {
+                continue;
+            }
+            const LineSegment& line = lines[li];
+            cv::Rect lineRect = line.BoundingRect(4, gray.size());
+            if ((circleRect & lineRect).area() <= 0) {
+                continue;
+            }
+
+            double radius = static_cast<double>(circle.radius);
+            double tol = std::max(6.0, radius * 0.25);
+            double dist1 = cv::norm(line.p1 - circle.center);
+            double dist2 = cv::norm(line.p2 - circle.center);
+            bool touches = (std::abs(dist1 - radius) <= tol) || (std::abs(dist2 - radius) <= tol);
+
+            if (!touches) {
+                continue;
+            }
+
+            lineUsed[li] = true;
+            circleUsed[ci] = true;
+
+            Shape combined;
+            combined.type = ShapeType::LineAndCircle;
+            combined.line = line;
+            combined.circle = circle;
+            combined.boundingBox = circleRect | lineRect;
+            combined.contour = BuildCircleContour(circle);
+            combined.contour.push_back(line.p1);
+            combined.contour.push_back(line.p2);
+            results.push_back(std::move(combined));
+            break;
+        }
+    }
+
+    for (size_t i = 0; i < lines.size(); ++i) {
+        if (lineUsed[i]) {
+            continue;
+        }
+        Shape shape;
+        shape.type = ShapeType::Line;
+        shape.line = lines[i];
+        shape.boundingBox = lines[i].BoundingRect(4, gray.size());
+        shape.contour = { lines[i].p1, lines[i].p2 };
+        results.push_back(std::move(shape));
+    }
+
+    for (size_t i = 0; i < circles.size(); ++i) {
+        if (circleUsed[i]) {
+            continue;
+        }
+        Shape shape;
+        shape.type = ShapeType::Circle;
+        shape.circle = circles[i];
+        shape.boundingBox = circles[i].BoundingRect(2, gray.size());
+        shape.contour = BuildCircleContour(circles[i]);
+        results.push_back(std::move(shape));
+    }
+
+    std::vector<std::vector<cv::Point>> contours;
+    cv::findContours(edges, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+
+    for (const auto& contour : contours) {
+        if (contour.size() < 5) {
+            continue;
+        }
+        double area = std::abs(cv::contourArea(contour));
+        if (area <= 0) {
+            continue;
+        }
+        double circularity = ContourCircularity(contour);
+        cv::Rect bbox = cv::boundingRect(contour);
+        if (bbox.width <= 0 || bbox.height <= 0) {
+            continue;
+        }
+
+        bool overlapsExisting = false;
+        for (const auto& existing : results) {
+            if ((existing.boundingBox & bbox).area() > 0) {
+                overlapsExisting = true;
+                break;
+            }
+        }
+        if (overlapsExisting) {
+            continue;
+        }
+
+        if (circularity > 0.7) {
+            Circle circle;
+            circle.center = cv::Point(bbox.x + bbox.width / 2, bbox.y + bbox.height / 2);
+            circle.radius = static_cast<int>(std::round((bbox.width + bbox.height) / 4.0));
+            Shape shape;
+            shape.type = ShapeType::Circle;
+            shape.circle = circle;
+            shape.boundingBox = circle.BoundingRect(0, gray.size());
+            shape.contour = contour;
+            results.push_back(std::move(shape));
+        }
+    }
+
+    return results;
 }
 
+cv::Mat ShapeExtractor::RenderResult(const cv::Mat& input, const std::vector<Shape>& shapes) const
+{
+    if (input.empty()) {
+        return {};
+    }
+
+    cv::Mat canvas;
+    switch (input.channels()) {
+    case 1:
+        cv::cvtColor(input, canvas, cv::COLOR_GRAY2BGR);
+        break;
+    case 3:
+        canvas = input.clone();
+        break;
+    case 4:
+        cv::cvtColor(input, canvas, cv::COLOR_BGRA2BGR);
+        break;
+    default:
+        input.convertTo(canvas, CV_8UC3);
+        break;
+    }
+
+    for (const auto& shape : shapes) {
+        cv::Scalar color;
+        std::string label;
+        switch (shape.type) {
+        case ShapeType::Line:
+            color = cv::Scalar(60, 220, 60);
+            label = "Line";
+            break;
+        case ShapeType::Circle:
+            color = cv::Scalar(60, 60, 220);
+            label = "Circle";
+            break;
+        case ShapeType::LineAndCircle:
+            color = cv::Scalar(220, 70, 200);
+            label = "Line+Circle";
+            break;
+        }
+
+        if (shape.circle.has_value()) {
+            cv::circle(canvas, shape.circle->center, shape.circle->radius, color, 2, cv::LINE_AA);
+        }
+        if (shape.line.has_value()) {
+            cv::line(canvas, shape.line->p1, shape.line->p2, color, 2, cv::LINE_AA);
+        }
+        if (shape.boundingBox.width > 0 && shape.boundingBox.height > 0) {
+            cv::rectangle(canvas, shape.boundingBox, color, 1, cv::LINE_AA);
+        }
+
+        cv::Point textPt(shape.boundingBox.x, shape.boundingBox.y - 5);
+        if (textPt.y < 10) {
+            textPt.y = shape.boundingBox.y + shape.boundingBox.height + 15;
+        }
+        textPt = ClampPoint(textPt, canvas.size());
+        cv::putText(canvas, label, textPt, cv::FONT_HERSHEY_SIMPLEX, 0.5, color, 1, cv::LINE_AA);
+    }
+
+    return canvas;
+}
+
+std::vector<cv::Point> ShapeExtractor::BuildCircleContour(const Circle& circle)
+{
+    std::vector<cv::Point> contour;
+    const int segments = 36;
+    contour.reserve(static_cast<size_t>(segments));
+    for (int i = 0; i < segments; ++i) {
+        double angle = 2.0 * CV_PI * static_cast<double>(i) / static_cast<double>(segments);
+        int x = static_cast<int>(std::round(circle.center.x + circle.radius * std::cos(angle)));
+        int y = static_cast<int>(std::round(circle.center.y + circle.radius * std::sin(angle)));
+        contour.emplace_back(x, y);
+    }
+    return contour;
+}
+
+double ShapeExtractor::ContourCircularity(const std::vector<cv::Point>& contour)
+{
+    double perimeter = cv::arcLength(contour, true);
+    if (perimeter <= 0.0) {
+        return 0.0;
+    }
+    double area = std::abs(cv::contourArea(contour));
+    return (4.0 * CV_PI * area) / (perimeter * perimeter);
+}

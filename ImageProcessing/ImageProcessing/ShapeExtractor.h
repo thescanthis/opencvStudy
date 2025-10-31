@@ -1,47 +1,68 @@
 #pragma once
-#include <opencv2/opencv.hpp>
+#include <optional>
 #include <vector>
 
-struct DetectedLine {
-    cv::Point p1, p2;
-    double length;
-    double angle;
-};
+#include <opencv2/core.hpp>
 
-struct DetectedCircle {
-    cv::Point center;
-    float radius;
-};
-
-struct DetectedContour {
-    cv::Rect bbox;
-    double area;
-};
-
-struct DetectedRect { 
-    cv::Rect r; 
-    double area; 
-};
-
-class ShapeExtractor {
+class ShapeExtractor
+{
 public:
-    ShapeExtractor() = default;
+    enum class ShapeType
+    {
+        Line,
+        Circle,
+        LineAndCircle
+    };
 
-    void Analyze(const cv::Mat& roi);
-    void DebugPrint() const;
+    struct LineSegment
+    {
+        cv::Point p1;
+        cv::Point p2;
 
-    const std::vector<DetectedLine>& GetLines() const { return m_lines; }
-    const std::vector<DetectedCircle>& GetCircles() const { return m_circles; }
-    const std::vector<DetectedContour>& GetContours() const { return m_contours; }
-    const std::vector<DetectedRect>& GetRects() const { return m_rects; }
+        double Length() const;
+        cv::Rect BoundingRect(int padding = 0, const cv::Size& limit = {}) const;
+    };
 
+    struct Circle
+    {
+        cv::Point center;
+        int radius = 0;
 
-    cv::Mat BuildMask(const cv::Size& sz, int lineThick = 3, int circleThick = 3, bool fillRects = true) const;
+        cv::Rect BoundingRect(int padding = 0, const cv::Size& limit = {}) const;
+    };
+
+    struct DetectedShape
+    {
+        ShapeType type;
+        cv::Rect boundingBox;
+        std::vector<cv::Point> contour;
+        std::optional<LineSegment> line;
+        std::optional<Circle> circle;
+    };
+
+    struct Params
+    {
+        double cannyLower = 60.0;
+        double cannyUpper = 160.0;
+        double minComponentAreaRatio = 0.0002; // relative to image area
+        double minLineLengthRatio = 0.18;       // relative to shorter image dimension
+        double maxLineGapRatio = 0.02;          // relative to shorter image dimension
+        double minCircleRadiusRatio = 0.04;     // relative to shorter image dimension
+        double maxCircleRadiusRatio = 0.45;     // relative to shorter image dimension
+        double circleAccumulator = 30.0;
+        double circleCannyHigh = 150.0;
+    };
+
+    explicit ShapeExtractor(const Params& params = Params{});
+
+    std::vector<DetectedShape> Extract(const cv::Mat& input) const;
+    cv::Mat RenderResult(const cv::Mat& input, const std::vector<DetectedShape>& shapes) const;
 
 private:
-    std::vector<DetectedLine>   m_lines;
-    std::vector<DetectedCircle> m_circles;
-    std::vector<DetectedContour> m_contours;
-    std::vector<DetectedRect>   m_rects;
+    Params params_;
+
+    static std::vector<cv::Point> BuildCircleContour(const Circle& circle);
+    static double ContourCircularity(const std::vector<cv::Point>& contour);
 };
+
 

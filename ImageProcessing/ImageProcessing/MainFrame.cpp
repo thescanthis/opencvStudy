@@ -55,8 +55,8 @@ MainFrame::~MainFrame()
 
 void MainFrame::OnOpen(wxCommandEvent&)
 {
-    wxFileDialog dlg(this, "파일 열기", "", "",
-        "PDF 및 이미지 파일 (*.pdf;*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff)|*.pdf;*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff",
+    wxFileDialog dlg(this, "Open", "", "",
+        "PDF and image files (*.pdf;*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff)|*.pdf;*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff",
         wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if (dlg.ShowModal() != wxID_OK)
@@ -67,32 +67,70 @@ void MainFrame::OnOpen(wxCommandEvent&)
 
     if (ext == "pdf")
     {
-        SetStatusText("PDF 로딩 중...");
+        SetStatusText("Loading PDF pages...");
 
         m_pages = LoadPdfAllPages_Poppler(path.wc_str(), 200);
         if (m_pages.empty())
         {
-            wxMessageBox("PDF를 불러오지 못했습니다.", "오류", wxOK | wxICON_ERROR);
-            SetStatusText("PDF 로드 실패");
+            wxMessageBox("Failed to load PDF.", "", wxOK | wxICON_ERROR);
+            SetStatusText("PDF load failed");
             return;
         }
 
-        // 첫 페이지 표시
-        m_panel->SetImage(m_pages[0]);
-        SetStatusText(wxString::Format("PDF 로드 완료 (%d 페이지)", (int)m_pages.size()));
+        SetStatusText(wxString::Format("PDF loaded (%d pages). Running shape extraction...", (int)m_pages.size()));
+        ShowShapeExtraction(m_pages[0]);
     }
     else
     {
         cv::Mat img = cv::imread(path.ToStdString(), cv::IMREAD_UNCHANGED);
         if (img.empty())
         {
-            wxMessageBox("이미지를 불러오지 못했습니다.", "오류", wxOK | wxICON_ERROR);
-            SetStatusText("이미지 로드 실패");
+            wxMessageBox("Failed to load image.", "", wxOK | wxICON_ERROR);
+            SetStatusText("Image load failed");
             return;
         }
 
         m_pages.clear();
-        m_panel->SetImage(img);
-        SetStatusText(wxString::Format("이미지 로드 완료: %s", dlg.GetFilename()));
+        SetStatusText(wxString::Format("Image loaded: %s. Running shape extraction...", dlg.GetFilename()));
+        ShowShapeExtraction(img);
     }
+}
+
+void MainFrame::ShowShapeExtraction(const cv::Mat& image)
+{
+    if (image.empty())
+    {
+        wxLogWarning("Shape extraction skipped: empty image");
+        return;
+    }
+
+    ShapeExtractor extractor;
+    auto shapes = extractor.Extract(image);
+    cv::Mat visual = extractor.RenderResult(image, shapes);
+    m_panel->SetImage(visual);
+
+    size_t lineCount = 0;
+    size_t circleCount = 0;
+    size_t comboCount = 0;
+    for (const auto& shape : shapes)
+    {
+        switch (shape.type)
+        {
+        case ShapeExtractor::ShapeType::Line:
+            ++lineCount;
+            break;
+        case ShapeExtractor::ShapeType::Circle:
+            ++circleCount;
+            break;
+        case ShapeExtractor::ShapeType::LineAndCircle:
+            ++comboCount;
+            break;
+        }
+    }
+
+    wxLogMessage("Shape extraction result - Lines: %zu, Circles: %zu, Line+Circle: %zu",
+        lineCount, circleCount, comboCount);
+
+    SetStatusText(wxString::Format("Shapes - Lines: %zu, Circles: %zu, Line+Circle: %zu",
+        lineCount, circleCount, comboCount));
 }

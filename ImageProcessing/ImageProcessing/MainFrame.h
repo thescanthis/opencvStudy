@@ -9,6 +9,7 @@ public:
     ~MainFrame();
 private:
     void OnOpen(wxCommandEvent&);
+    void ShowShapeExtraction(const cv::Mat& image);
 
 private:
     ImageCasting* m_panel = nullptr;
