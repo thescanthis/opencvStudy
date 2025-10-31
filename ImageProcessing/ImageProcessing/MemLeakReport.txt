@@ -1,0 +1,8 @@
+[ INFO:0@4.954] global registry_parallel.impl.hpp:96 cv::parallel::ParallelBackendRegistry::ParallelBackendRegistry core(parallel): Enabled backends(3, sorted by priority): ONETBB(1000); TBB(990); OPENMP(980)
+[ INFO:0@4.954] global plugin_loader.impl.hpp:67 cv::plugin::impl::DynamicLib::libraryLoad load C:\AIND_Library\Git_PredicTest\x64_Cami_Lib\opencvStudy\ImageProcessing\x64\Debug\opencv_core_parallel_onetbb4110_64d.dll => FAILED
+[ INFO:0@4.954] global plugin_loader.impl.hpp:67 cv::plugin::impl::DynamicLib::libraryLoad load opencv_core_parallel_onetbb4110_64d.dll => FAILED
+[ INFO:0@4.955] global plugin_loader.impl.hpp:67 cv::plugin::impl::DynamicLib::libraryLoad load C:\AIND_Library\Git_PredicTest\x64_Cami_Lib\opencvStudy\ImageProcessing\x64\Debug\opencv_core_parallel_tbb4110_64d.dll => FAILED
+[ INFO:0@4.955] global plugin_loader.impl.hpp:67 cv::plugin::impl::DynamicLib::libraryLoad load opencv_core_parallel_tbb4110_64d.dll => FAILED
+[ INFO:0@4.955] global plugin_loader.impl.hpp:67 cv::plugin::impl::DynamicLib::libraryLoad load C:\AIND_Library\Git_PredicTest\x64_Cami_Lib\opencvStudy\ImageProcessing\x64\Debug\opencv_core_parallel_openmp4110_64d.dll => FAILED
+[ INFO:0@4.955] global plugin_loader.impl.hpp:67 cv::plugin::impl::DynamicLib::libraryLoad load opencv_core_parallel_openmp4110_64d.dll => FAILED
+~MainFrame() »£√‚µ 

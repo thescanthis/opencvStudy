@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Appmain.cpp" />
+    <ClCompile Include="DebugAnalyzer.cpp" />
     <ClCompile Include="DragSelectionOverlay.cpp" />
     <ClCompile Include="ImageUtils.cpp" />
     <ClCompile Include="MainFrame.cpp" />
@@ -148,13 +149,18 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="PdfLoader.cpp" />
+    <ClCompile Include="ShapeExtractor.cpp" />
+    <ClCompile Include="TextExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DebugAnalyzer.h" />
     <ClInclude Include="DragSelectionOverlay.h" />
     <ClInclude Include="ImageUtils.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PdfLoader.h" />
+    <ClInclude Include="ShapeExtractor.h" />
+    <ClInclude Include="TextExtractor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

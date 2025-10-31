@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Extractor">
+      <UniqueIdentifier>{a190f9a5-e80e-4880-b324-40d25cb4c5d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -33,6 +36,15 @@
     <ClCompile Include="DragSelectionOverlay.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="DebugAnalyzer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TextExtractor.cpp">
+      <Filter>헤더 파일\Extractor</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeExtractor.cpp">
+      <Filter>헤더 파일\Extractor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -49,6 +61,15 @@
     </ClInclude>
     <ClInclude Include="DragSelectionOverlay.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugAnalyzer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeExtractor.h">
+      <Filter>헤더 파일\Extractor</Filter>
+    </ClInclude>
+    <ClInclude Include="TextExtractor.h">
+      <Filter>헤더 파일\Extractor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

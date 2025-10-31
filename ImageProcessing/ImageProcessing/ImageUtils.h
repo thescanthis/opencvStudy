@@ -10,7 +10,7 @@ class ImageCasting : public wxPanel
 {
 public:
     explicit ImageCasting(wxWindow* parent);
-
+    ~ImageCasting();
     void SetImage(const cv::Mat& mat);
     bool HasImage() const { return m_bitmap.IsOk(); }
 
@@ -20,6 +20,7 @@ public:
 
     // 화면좌표 → 원본 이미지좌표 (성공 시 true)
     bool ScreenToImagePt(const wxPoint& p, cv::Point& out) const;
+    const cv::Mat& MatOriginal() const { return m_matOriginal; }
 
     // client 사각형(화면좌표) → 원본 이미지 사각형
     bool ClientRectToImageRect(const wxRect& rClient, cv::Rect& out) const;

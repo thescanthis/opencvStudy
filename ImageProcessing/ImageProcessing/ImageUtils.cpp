@@ -15,6 +15,11 @@ ImageCasting::ImageCasting(wxWindow* parent)
     SetBackgroundColour(*wxWHITE);         // 배경색 명시
 }
 
+ImageCasting::~ImageCasting()
+{
+
+}
+
 void ImageCasting::OnEraseBG(wxEraseEvent&) {}
 
 void ImageCasting::SetImage(const cv::Mat& mat)
@@ -80,7 +85,7 @@ wxBitmap ImageCasting::CvMatToWxBitmap(const cv::Mat& src)
             std::memcpy(dstRGB + y * rowRGBBytes, srcRGB + y * srcStepRGB, rowRGBBytes);
 
         // 알파 버퍼 할당 후 행 단위 복사
-        img.SetAlpha(new unsigned char[rgb.cols * rgb.rows]);
+        //img.SetAlpha(new unsigned char[rgb.cols * rgb.rows]);
         const size_t pixelCount = static_cast<size_t>(rgb.cols) * static_cast<size_t>(rgb.rows);
         auto alphaBuffer = std::make_unique<unsigned char[]>(pixelCount);
         

@@ -1,35 +1,33 @@
 #include "pch.h"
 #include "MainFrame.h"
 
+#ifdef _DEBUG
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+
+// 파일/라인 추적용 new 오버로드 (이 .cpp에서만!)
+#define DBG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DBG_NEW
+#endif
 
 class MyApp : public wxApp {
 public:
     virtual bool OnInit() {
 
-        wxInitAllImageHandlers(); // wxImage용 초기화
-        
         frame = new MainFrame();
-        frame->Bind(wxEVT_DESTROY, &MyApp::OnMainFrameDestroyed, this);
         frame->Show();
         SetTopWindow(frame);
-        SetExitOnFrameDelete(true);  // 이거 설정했으면 프레임이 닫힐 때 delete 됨
+        // OnExit() 같은 곳에서 강제로 찍고 싶으면
+
         return true;
     }
 
     virtual int OnExit() override {
-        wxImage::CleanUpHandlers(); //  
-        if (frame && !frame->IsBeingDeleted()) {
-            frame->Destroy();
-        }
-        frame = nullptr;
         return wxApp::OnExit();
     }
 
-private:
-    void OnMainFrameDestroyed(wxWindowDestroyEvent&) {
-        frame = nullptr;
-    }
 
+private:
     MainFrame* frame = nullptr;
 };
 

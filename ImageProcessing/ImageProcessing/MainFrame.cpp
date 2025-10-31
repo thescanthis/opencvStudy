@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MainFrame.h"
 #include "PdfLoader.h"
+#include "DebugAnalyzer.h"
 
 MainFrame::MainFrame()
     : wxFrame(nullptr, wxID_ANY, "OpenCV 연동", wxDefaultPosition, wxSize(800, 600)) 
@@ -30,6 +31,14 @@ MainFrame::MainFrame()
                 wxLogMessage("ROI(image): %d,%d %dx%d", roi.x, roi.y, roi.width, roi.height);
                 // TODO: OCR/도형 분석
             }
+
+            const cv::Mat& img = m_panel->MatOriginal();
+            if (img.empty()) return;
+
+            cv::Mat roiMat = img(roi).clone();
+
+            static DebugAnalyzer analyzer;
+            analyzer.AnalyzeAndShow(roiMat);
         }
     );
 
