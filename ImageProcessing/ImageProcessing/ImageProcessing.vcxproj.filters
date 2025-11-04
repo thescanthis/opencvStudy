@@ -16,6 +16,9 @@
     <Filter Include="헤더 파일\Extractor">
       <UniqueIdentifier>{a190f9a5-e80e-4880-b324-40d25cb4c5d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\PDF">
+      <UniqueIdentifier>{3dc8cea8-31d6-4891-a299-ceb0ec2944b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -30,9 +33,6 @@
     <ClCompile Include="ImageUtils.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PdfLoader.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="DragSelectionOverlay.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -43,6 +43,12 @@
       <Filter>헤더 파일\Extractor</Filter>
     </ClCompile>
     <ClCompile Include="ShapeExtractor.cpp">
+      <Filter>헤더 파일\Extractor</Filter>
+    </ClCompile>
+    <ClCompile Include="PdfLoader.cpp">
+      <Filter>헤더 파일\PDF</Filter>
+    </ClCompile>
+    <ClCompile Include="LineExtractor.cpp">
       <Filter>헤더 파일\Extractor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,9 +62,6 @@
     <ClInclude Include="ImageUtils.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PdfLoader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="DragSelectionOverlay.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -69,6 +72,12 @@
       <Filter>헤더 파일\Extractor</Filter>
     </ClInclude>
     <ClInclude Include="TextExtractor.h">
+      <Filter>헤더 파일\Extractor</Filter>
+    </ClInclude>
+    <ClInclude Include="PdfLoader.h">
+      <Filter>헤더 파일\PDF</Filter>
+    </ClInclude>
+    <ClInclude Include="LineExtractor.h">
       <Filter>헤더 파일\Extractor</Filter>
     </ClInclude>
   </ItemGroup>

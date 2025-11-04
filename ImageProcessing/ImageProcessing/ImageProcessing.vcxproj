@@ -141,6 +141,7 @@
     <ClCompile Include="DebugAnalyzer.cpp" />
     <ClCompile Include="DragSelectionOverlay.cpp" />
     <ClCompile Include="ImageUtils.cpp" />
+    <ClCompile Include="LineExtractor.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -156,6 +157,7 @@
     <ClInclude Include="DebugAnalyzer.h" />
     <ClInclude Include="DragSelectionOverlay.h" />
     <ClInclude Include="ImageUtils.h" />
+    <ClInclude Include="LineExtractor.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PdfLoader.h" />

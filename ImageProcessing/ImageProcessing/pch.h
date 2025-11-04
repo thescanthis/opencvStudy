@@ -6,6 +6,10 @@
 #include <wx/graphics.h>  // (¿É¼Ç) wxGraphicsContext
 #include <opencv2/opencv.hpp>
 
+
+#include <vector>
+#include <algorithm>
+
 #if _DEBUG
 #pragma comment (lib,"wxbase32ud.lib")
 #pragma comment (lib,"wxbase32ud_net.lib")
