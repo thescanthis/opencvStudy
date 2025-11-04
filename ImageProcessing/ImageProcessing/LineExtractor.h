@@ -28,7 +28,7 @@ class LineExtractor
 public:
     struct Params {
         // CLAHE
-        double  claheClipLimit = 3.0;       //대비
+        double  claheClipLimit = 3;       //대비
         cv::Size claheTileGrid{ 8, 8 };
 
         // 이진화/반전
@@ -38,16 +38,16 @@ public:
         StrokePolarity polarity = StrokePolarity::StrokeWhite; // 기본: 선=흰
 
         // 모폴로지 커널
-        int     minK = 1;                  // 커널 길이
+        int     minK = 8;                  // 커널 길이
         double  kxScale = 1.0 / 120.0;       // W * kxScale  가로선
         double  kyScale = 1.0 / 80.0;       // H * kyScale  세로선
 
         // 허프/길이/틈
-        double  minLenFrac = 0.12;           // 짧은선 검출영역
+        double  minLenFrac = 0.10;           // 짧은선 검출영역
         double  minLenAbs = 18;           // 픽셀 범위조정
-        int     houghThreshold = 60;        // 민감도
-        int     maxGapMin = 2;              // 단절 허용범위
-        double  maxGapFrac = 1.0 / 120.0;   // 세밀한 연결 유지
+        int     houghThreshold = 50;        // 민감도
+        int     maxGapMin = 8;              // 단절 허용범위
+        double  maxGapFrac = 1.0 / 100.0;   // 세밀한 연결 유지
 
         // 스냅 기준 (~10도)
         double  snapSinThresh = 0.173;      // = sin(10°)

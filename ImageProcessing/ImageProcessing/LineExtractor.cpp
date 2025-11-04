@@ -15,58 +15,47 @@ namespace aind {
         makeBinaryWithWhiteStrokes(roi, dbgGray_, dbgBin_);
 
         // 수평,수직 분리
-        //extractHV(dbgBin_, dbgHoriz_, dbgVert_);
-
+        extractHV(dbgBin_, dbgHoriz_, dbgVert_);
+        
         //선검출
-        //detectOrthogonalLines(dbgHoriz_, dbgVert_, lines_);
+        detectOrthogonalLines(dbgHoriz_, dbgVert_, lines_);
 
-        //if (params_.enableSolidFilter)
-        //{
-        //    cv::Mat solidMask = BuildSolidMask(dbgBin_,
-        //        params_.solidMinArea,
-        //        params_.solidErodePx);
-        //    
-        //    FilterSolidAreas(lines_,
-        //        solidMask,
-        //        params_.solidInsideRatioThresh,
-        //        params_.solidSampleCount);
-        //}
+        if (params_.enableSolidFilter)
+        {
+            //cv::Mat solidMask = BuildSolidMask(dbgBin_,
+            //    params_.solidMinArea,
+            //    params_.solidErodePx);
+            //
+            //FilterSolidAreas(lines_,
+            //    solidMask,
+            //    params_.solidInsideRatioThresh,
+            //    params_.solidSampleCount);
+        }
     }
 
     void LineExtractor::makeBinaryWithWhiteStrokes(const Mat& roi, Mat& gray, Mat& bin) const
     {
         // 1) Gray
-        if (roi.channels() == 3)      cv::cvtColor(roi, gray, COLOR_BGR2GRAY);
-        else if (roi.channels() == 4) cv::cvtColor(roi, gray, COLOR_BGRA2GRAY);
-        else                          gray = roi.clone();
+        if (roi.channels() == 3) cv::cvtColor(roi, gray, cv::COLOR_BGR2GRAY);
+        else if (roi.channels() == 4) cv::cvtColor(roi, gray, cv::COLOR_BGRA2GRAY);
+        else gray = roi.clone();
 
-        // 2) CLAHE
-        Ptr<CLAHE> clahe = createCLAHE(params_.claheClipLimit, params_.claheTileGrid);
-        Mat eq; clahe->apply(gray, eq);
+        // 1) 배경(저주파) 추정: 큰 커널로 블러
+        cv::Mat bg;
+        cv::blur(gray, bg, cv::Size(51, 51)); // ← 값 키우면 더 큰 영역 평균
 
-        // 3) Binary
-        if (params_.useOtsu) {
-            threshold(eq, bin, 0, 255, THRESH_BINARY | THRESH_OTSU);
-        }
-        else {
-            threshold(eq, bin, params_.manualThresh, 255, THRESH_BINARY);
-        }
+        // 2) 원본 - 배경
+        cv::Mat norm;
+        cv::absdiff(gray, bg, norm);
 
-        // 4) 극성 보정
-        const double whiteRatio = double(cv::countNonZero(bin)) / double(bin.total());
+        // 3) 대비 보정
+        cv::normalize(norm, norm, 0, 255, cv::NORM_MINMAX);
 
-        switch (params_.polarity) {
-        case StrokePolarity::StrokeWhite:      // 선=흰 보장
-            if (whiteRatio > 0.5) cv::bitwise_not(bin, bin);
-            break;
-        case StrokePolarity::StrokeBlack:      // 선=검 보장
-            if (whiteRatio <= 0.5) cv::bitwise_not(bin, bin);
-            break;
-        case StrokePolarity::Auto:             // 기존 자동
-            if (params_.autoInvertIfWhiteMajor && whiteRatio > 0.5)
-                cv::bitwise_not(bin, bin);
-            break;
-        }
+        // 4) 배경 흰색, 선 검정으로 반전
+        cv::bitwise_not(norm, norm);
+
+        // 5) 결과 확인
+        cv::imshow("Normalized drawing", norm);
     }
 
     void LineExtractor::extractHV(const Mat& bin, Mat& horiz, Mat& vert) const
@@ -78,12 +67,20 @@ namespace aind {
         const int ky = std::max(params_.minK, static_cast<int>(H * params_.kyScale));
 
         // 수평(침식,팽창)
-        erode(bin, horiz, getStructuringElement(MORPH_RECT, Size(clampPositive(kx), 1)));
-        dilate(horiz, horiz, getStructuringElement(MORPH_RECT, Size(clampPositive(kx), 1)));
+        //erode(bin, horiz, getStructuringElement(MORPH_RECT, Size(clampPositive(kx), 1)));
+        //dilate(horiz, horiz, getStructuringElement(MORPH_RECT, Size(clampPositive(kx), 1)));
+
+        cv::erode(bin, horiz, cv::getStructuringElement(cv::MORPH_RECT, { kx,1 }));
+        cv::dilate(horiz, horiz, cv::getStructuringElement(cv::MORPH_RECT, { kx,1 }));
+
+        cv::morphologyEx(horiz, horiz, cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_RECT, { 9,1 }));
 
         // 수직
-        erode(bin, vert, getStructuringElement(MORPH_RECT, Size(1, clampPositive(ky))));
-        dilate(vert, vert, getStructuringElement(MORPH_RECT, Size(1, clampPositive(ky))));
+        //erode(bin, vert, getStructuringElement(MORPH_RECT, Size(1, clampPositive(ky))));
+        //dilate(vert, vert, getStructuringElement(MORPH_RECT, Size(1, clampPositive(ky))));
+
+        cv::erode(bin, vert, cv::getStructuringElement(cv::MORPH_RECT, { 1,ky }));
+        cv::dilate(vert, vert, cv::getStructuringElement(cv::MORPH_RECT, { 1,ky }));
     }
 
     void LineExtractor::detectOrthogonalLines(const Mat& horiz, const Mat& vert, std::vector<Line>& out) const

@@ -28,7 +28,7 @@ MainFrame::MainFrame()
         [this](const wxRect& rClient) {
             cv::Rect roi;
             if (m_panel->ClientRectToImageRect(rClient, roi)) {
-                wxLogMessage("ROI(image): %d,%d %dx%d", roi.x, roi.y, roi.width, roi.height);
+               // wxLogMessage("ROI(image): %d,%d %dx%d", roi.x, roi.y, roi.width, roi.height);
                 // TODO: OCR/도형 분석
             }
 
