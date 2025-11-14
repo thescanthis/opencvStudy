@@ -33,7 +33,10 @@ public:
 
         // Tesseract
         std::string lang = "eng";
-        std::string whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-()/:";
+        std::string whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "abcdefghijklmnopqrstuvwxyz"
+            "0123456789-()/:.,+#";
+        bool   autoInvertPolarity = true;
         tesseract::PageSegMode psmPrimary = tesseract::PSM_SPARSE_TEXT;  // 작은 조각 텍스트들
         // 실패시 재시도 모드
         std::vector<tesseract::PageSegMode> fallbackPsm = {

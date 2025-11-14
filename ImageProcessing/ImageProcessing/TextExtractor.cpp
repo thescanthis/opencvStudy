@@ -9,6 +9,17 @@ public:
     bool isInit = false;
     Params params;
 
+    void applyTessVariables() {
+        if (!isInit) return;
+        if (!tess.SetVariable("tessedit_char_whitelist", params.whitelist.c_str())) {
+            wxLogWarning("Failed to set tessedit_char_whitelist");
+        }
+        if (!tess.SetVariable("tessedit_do_invert", params.autoInvertPolarity ? "1" : "0")) {
+            wxLogWarning("Failed to set tessedit_do_invert");
+        }
+        tess.ClearAdaptiveClassifier();
+    }
+
     static int snapOdd(int v) { return (v % 2) ? v : v + 1; }
 
     // 1) 배경 평탄화 + CLAHE
@@ -43,9 +54,12 @@ public:
         else {
             cv::threshold(eq, bin, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
         }
-        // 문자=흰 보장 (흰 비율이 작은 경우 반전)
-        double wr = double(cv::countNonZero(bin)) / double(bin.total());
-        if (wr < 0.5) cv::bitwise_not(bin, bin);
+
+        if (params.autoInvertPolarity) {
+            double wr = double(cv::countNonZero(bin)) / double(bin.total());
+            if (wr < 0.5) cv::bitwise_not(bin, bin);
+        }
+
         return bin;
     }
 
@@ -163,22 +177,24 @@ bool TextExtractor::Initialize(const Params& p)
         return false;
     }
 
-    // 문자 필터링(선택 사항)
-    if (!p.whitelist.empty())
-        m_impl->tess.SetVariable("tessedit_char_whitelist", p.whitelist.c_str());
-
     // 러닝/사전 기능 비활성화 (도면용)
     m_impl->tess.SetVariable("user_defined_dpi", "300");
     m_impl->tess.SetVariable("classify_enable_learning", "0");
     m_impl->tess.SetVariable("load_system_dawg", "F");
     m_impl->tess.SetVariable("load_freq_dawg", "F");
-    m_impl->tess.ClearAdaptiveClassifier();
 
     m_impl->isInit = true;
     return true;
 }
 
-void TextExtractor::SetParams(const Params& p) { if (m_impl) m_impl->params = p; }
+void TextExtractor::SetParams(const Params& p) {
+    if (!m_impl) return;
+    m_impl->params = p;
+    if (m_impl->isInit) {
+        m_impl->applyTessVariables();
+    }
+}
+
 const TextExtractor::Params& TextExtractor::GetParams() const { return m_impl->params; }
 
 std::vector<TextResult> TextExtractor::ExtractBlueprintText(const cv::Mat& roi, const BlueprintParams& bp)
