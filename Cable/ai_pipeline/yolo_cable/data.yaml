@@ -1,0 +1,12 @@
+# YOLOv8 학습 설정 (케이블 도면 형상 추출)
+path: C:/AIND_Library/Git_PredicTest/x64_Cami_Lib/PSCD1500/PSCD1500/Cable/ai_pipeline/yolo_cable/dataset
+train: images/train
+val: images/val
+
+names:
+  0: connector
+  1: branch_sleeve
+  2: branch_bare
+  3: elbow
+  4: dimension
+  5: balloon

@@ -1,0 +1,12 @@
+
+# YOLO cable - 재생성 가능한 대용량 / 로컬 산출물
+ai_pipeline/yolo_cable/images/
+ai_pipeline/yolo_cable/dataset/
+ai_pipeline/yolo_cable/runs/
+ai_pipeline/yolo_cable/preview/
+ai_pipeline/yolo_cable/infer_out/
+ai_pipeline/yolo_cable/*.pt
+ai_pipeline/yolo_cable/__pycache__/
+ai_pipeline/test_output/scan/
+ai_pipeline/test_output/connector_crops/
+ai_pipeline/yolo_cable/labels/Success/
