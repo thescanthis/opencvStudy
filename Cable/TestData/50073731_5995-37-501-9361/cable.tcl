@@ -1,0 +1,15 @@
+p@J20@A@B5:1
+p@J20@B@B5:2
+p@J20@Braid@B5:3
+p@J5@A@B5:33
+p@J5@B@B5:34
+p@J5@Braid@B5:35
+o@J20-A@J5-A@B5:1@B5:33@5
+o@J20-B@J5-B@B5:2@B5:34@5
+o@J20-Braid@J5-Braid@B5:3@B5:35@5
+s@(J20-A,J5-A)@(J20-B,J5-B)@(B5:1,B5:33)@(B5:2,B5:34)
+s@(J20-A,J5-A)@(J20-Braid,J5-Braid)@(B5:1,B5:33)@(B5:3,B5:35)
+s@(J20-B,J5-B)@(J20-Braid,J5-Braid)@(B5:2,B5:34)@(B5:3,B5:35)
+i@(J20-A,J5-A)@(J20-B,J5-B)@(B5:1,B5:33)@(B5:2,B5:34)
+i@(J20-A,J5-A)@(J20-Braid,J5-Braid)@(B5:1,B5:33)@(B5:3,B5:35)
+i@(J20-B,J5-B)@(J20-Braid,J5-Braid)@(B5:2,B5:34)@(B5:3,B5:35)

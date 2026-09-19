@@ -1,0 +1,15 @@
+p@P1@A@B5:1
+p@P1@B@B5:2
+p@P1@Braid@B5:3
+p@P2@A@B5:33
+p@P2@C@B5:34
+p@P2@Braid@B5:35
+o@P1-A@P2-A@B5:1@B5:33@5
+o@P1-B@P2-C@B5:2@B5:34@5
+o@P1-Braid@P2-Braid@B5:3@B5:35@5
+s@(P1-A,P2-A)@(P1-B,P2-C)@(B5:1,B5:33)@(B5:2,B5:34)
+s@(P1-A,P2-A)@(P1-Braid,P2-Braid)@(B5:1,B5:33)@(B5:3,B5:35)
+s@(P1-B,P2-C)@(P1-Braid,P2-Braid)@(B5:2,B5:34)@(B5:3,B5:35)
+i@(P1-A,P2-A)@(P1-B,P2-C)@(B5:1,B5:33)@(B5:2,B5:34)
+i@(P1-A,P2-A)@(P1-Braid,P2-Braid)@(B5:1,B5:33)@(B5:3,B5:35)
+i@(P1-B,P2-C)@(P1-Braid,P2-Braid)@(B5:2,B5:34)@(B5:3,B5:35)

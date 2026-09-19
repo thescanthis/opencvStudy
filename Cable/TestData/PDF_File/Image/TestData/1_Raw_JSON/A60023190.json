@@ -1,0 +1,221 @@
+[
+  {
+    "text": "A",
+    "x": 171,
+    "y": 417,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 171,
+    "y": 488,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 171,
+    "y": 558,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 171,
+    "y": 628,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 171,
+    "y": 698,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 171,
+    "y": 769,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 171,
+    "y": 839,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 171,
+    "y": 909,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 329,
+    "y": 452,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 329,
+    "y": 522,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 329,
+    "y": 592,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 329,
+    "y": 803,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 400,
+    "y": 522,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 400,
+    "y": 592,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 400,
+    "y": 803,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 400,
+    "y": 1084,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 540,
+    "y": 663,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 540,
+    "y": 733,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 540,
+    "y": 803,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 540,
+    "y": 873,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 540,
+    "y": 1084,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1350,
+    "y": 207,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1350,
+    "y": 277,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1350,
+    "y": 347,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1350,
+    "y": 628,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1350,
+    "y": 698,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1350,
+    "y": 769,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 1350,
+    "y": 839,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 1350,
+    "y": 909,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 1350,
+    "y": 979,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 1350,
+    "y": 1049,
+    "source": "grid_cell"
+  },
+  {
+    "text": "I",
+    "x": 1350,
+    "y": 1120,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 1350,
+    "y": 1190,
+    "source": "grid_cell"
+  },
+  {
+    "text": "J",
+    "x": 1350,
+    "y": 1260,
+    "source": "grid_cell"
+  },
+  {
+    "text": "P1",
+    "x": 72,
+    "y": 498
+  },
+  {
+    "text": "AWG20",
+    "x": 932,
+    "y": 189
+  },
+  {
+    "text": "P3",
+    "x": 1425,
+    "y": 200
+  }
+]

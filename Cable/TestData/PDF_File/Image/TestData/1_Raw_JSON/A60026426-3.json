@@ -1,0 +1,84 @@
+[
+  {
+    "text": "A",
+    "x": 88,
+    "y": 220,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 88,
+    "y": 271,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 88,
+    "y": 322,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 88,
+    "y": 373,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 88,
+    "y": 424,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 88,
+    "y": 475,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 938,
+    "y": 220,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 938,
+    "y": 271,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 938,
+    "y": 322,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 938,
+    "y": 373,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 938,
+    "y": 424,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 938,
+    "y": 475,
+    "source": "grid_cell"
+  },
+  {
+    "text": "P1",
+    "x": 72,
+    "y": 94
+  },
+  {
+    "text": "P2",
+    "x": 850,
+    "y": 94
+  }
+]

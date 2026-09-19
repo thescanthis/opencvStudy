@@ -1,0 +1,455 @@
+[
+  {
+    "text": "E",
+    "x": 86,
+    "y": 500,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 86,
+    "y": 534,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 86,
+    "y": 568,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 86,
+    "y": 602,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 86,
+    "y": 637,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 176,
+    "y": 58,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 176,
+    "y": 93,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 176,
+    "y": 127,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 176,
+    "y": 161,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 176,
+    "y": 517,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 176,
+    "y": 551,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 176,
+    "y": 585,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 176,
+    "y": 620,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 245,
+    "y": 58,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 245,
+    "y": 93,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 245,
+    "y": 127,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 245,
+    "y": 161,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 245,
+    "y": 277,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 245,
+    "y": 311,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 245,
+    "y": 517,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 245,
+    "y": 551,
+    "source": "grid_cell"
+  },
+  {
+    "text": "J",
+    "x": 245,
+    "y": 585,
+    "source": "grid_cell"
+  },
+  {
+    "text": "K",
+    "x": 245,
+    "y": 620,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 279,
+    "y": 58,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 279,
+    "y": 93,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 279,
+    "y": 127,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 279,
+    "y": 161,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 279,
+    "y": 277,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 279,
+    "y": 311,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 279,
+    "y": 517,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 279,
+    "y": 551,
+    "source": "grid_cell"
+  },
+  {
+    "text": "J",
+    "x": 279,
+    "y": 585,
+    "source": "grid_cell"
+  },
+  {
+    "text": "K",
+    "x": 279,
+    "y": 620,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1436,
+    "y": 345,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1436,
+    "y": 380,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1436,
+    "y": 414,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 1436,
+    "y": 517,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 1436,
+    "y": 551,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1483,
+    "y": 345,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1483,
+    "y": 380,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1483,
+    "y": 414,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 1483,
+    "y": 448,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 1483,
+    "y": 482,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 1483,
+    "y": 517,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 1483,
+    "y": 551,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 1659,
+    "y": 328,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 1659,
+    "y": 363,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 1659,
+    "y": 397,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 1659,
+    "y": 431,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 1659,
+    "y": 466,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1659,
+    "y": 500,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1659,
+    "y": 534,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1659,
+    "y": 568,
+    "source": "grid_cell"
+  },
+  {
+    "text": "P9",
+    "x": 247,
+    "y": 48
+  },
+  {
+    "text": "P8",
+    "x": 463,
+    "y": 50
+  },
+  {
+    "text": "P7",
+    "x": 679,
+    "y": 50
+  },
+  {
+    "text": "P6",
+    "x": 895,
+    "y": 52
+  },
+  {
+    "text": "A",
+    "x": 569,
+    "y": 80
+  },
+  {
+    "text": "B",
+    "x": 604,
+    "y": 80
+  },
+  {
+    "text": "C",
+    "x": 637,
+    "y": 80
+  },
+  {
+    "text": "D",
+    "x": 672,
+    "y": 80
+  },
+  {
+    "text": "AWG16",
+    "x": 380,
+    "y": 630
+  },
+  {
+    "text": "P5",
+    "x": 1087,
+    "y": 41
+  },
+  {
+    "text": "A",
+    "x": 979,
+    "y": 80
+  },
+  {
+    "text": "B",
+    "x": 996,
+    "y": 80
+  },
+  {
+    "text": "C",
+    "x": 1014,
+    "y": 80
+  },
+  {
+    "text": "D",
+    "x": 1033,
+    "y": 80
+  },
+  {
+    "text": "E",
+    "x": 1050,
+    "y": 80
+  },
+  {
+    "text": "F",
+    "x": 1069,
+    "y": 80
+  },
+  {
+    "text": "G",
+    "x": 1085,
+    "y": 80
+  },
+  {
+    "text": "H",
+    "x": 1104,
+    "y": 80
+  },
+  {
+    "text": "P4 P3",
+    "x": 1196,
+    "y": 49
+  },
+  {
+    "text": "TEL",
+    "x": 1239,
+    "y": 100
+  },
+  {
+    "text": "P2",
+    "x": 1517,
+    "y": 390
+  },
+  {
+    "text": "D",
+    "x": 1525,
+    "y": 295
+  },
+  {
+    "text": "C",
+    "x": 1525,
+    "y": 276
+  },
+  {
+    "text": "B",
+    "x": 1525,
+    "y": 258
+  },
+  {
+    "text": "A",
+    "x": 1525,
+    "y": 239
+  },
+  {
+    "text": "GUN",
+    "x": 1189,
+    "y": 560
+  },
+  {
+    "text": "VMS",
+    "x": 1189,
+    "y": 580
+  }
+]

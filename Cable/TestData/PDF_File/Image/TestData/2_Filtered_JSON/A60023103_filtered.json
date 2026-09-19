@@ -1,0 +1,340 @@
+[
+  {
+    "text": "P9",
+    "x": 472,
+    "y": 78
+  },
+  {
+    "text": "P8",
+    "x": 1001,
+    "y": 90
+  },
+  {
+    "text": "P7",
+    "x": 1434,
+    "y": 90
+  },
+  {
+    "text": "P6",
+    "x": 1681,
+    "y": 70
+  },
+  {
+    "text": "P5",
+    "x": 2071,
+    "y": 70
+  },
+  {
+    "text": "P4",
+    "x": 2698,
+    "y": 90
+  },
+  {
+    "text": "P3",
+    "x": 2788,
+    "y": 85
+  },
+  {
+    "text": "P1",
+    "x": 72,
+    "y": 1137
+  },
+  {
+    "text": "P2",
+    "x": 3291,
+    "y": 693
+  },
+  {
+    "text": "E",
+    "x": 144,
+    "y": 998,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 144,
+    "y": 1064,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 144,
+    "y": 1130,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 144,
+    "y": 1197,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 144,
+    "y": 1263,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 430,
+    "y": 145,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 430,
+    "y": 1031,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 430,
+    "y": 1097,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 430,
+    "y": 1164,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 430,
+    "y": 1230,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 517,
+    "y": 146,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 517,
+    "y": 212,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 517,
+    "y": 278,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 517,
+    "y": 344,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 517,
+    "y": 1031,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 517,
+    "y": 1097,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 517,
+    "y": 1164,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 517,
+    "y": 1230,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 2750,
+    "y": 700,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 2750,
+    "y": 766,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 2750,
+    "y": 833,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 2750,
+    "y": 1031,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 2750,
+    "y": 1097,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 2841,
+    "y": 700,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 2841,
+    "y": 766,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 2841,
+    "y": 833,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 2841,
+    "y": 899,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 2841,
+    "y": 965,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 2841,
+    "y": 1031,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 2841,
+    "y": 1097,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 3180,
+    "y": 667,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 3180,
+    "y": 733,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 3180,
+    "y": 799,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 3180,
+    "y": 865,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 3180,
+    "y": 932,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 3180,
+    "y": 998,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 3180,
+    "y": 1064,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 3180,
+    "y": 1130,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 817,
+    "y": 150
+  },
+  {
+    "text": "B",
+    "x": 874,
+    "y": 150
+  },
+  {
+    "text": "C",
+    "x": 932,
+    "y": 150
+  },
+  {
+    "text": "D",
+    "x": 990,
+    "y": 150
+  },
+  {
+    "text": "E",
+    "x": 1048,
+    "y": 150
+  },
+  {
+    "text": "A",
+    "x": 1821,
+    "y": 160
+  },
+  {
+    "text": "B",
+    "x": 1881,
+    "y": 160
+  },
+  {
+    "text": "C",
+    "x": 1941,
+    "y": 160
+  },
+  {
+    "text": "D",
+    "x": 2001,
+    "y": 160
+  },
+  {
+    "text": "E",
+    "x": 2061,
+    "y": 160
+  },
+  {
+    "text": "F",
+    "x": 2121,
+    "y": 160
+  },
+  {
+    "text": "G",
+    "x": 2181,
+    "y": 160
+  },
+  {
+    "text": "H",
+    "x": 2241,
+    "y": 160
+  }
+]

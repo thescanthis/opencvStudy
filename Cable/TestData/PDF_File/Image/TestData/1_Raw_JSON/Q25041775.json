@@ -1,0 +1,161 @@
+[
+  {
+    "text": "A",
+    "x": 156,
+    "y": 81,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 156,
+    "y": 110,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 156,
+    "y": 138,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 156,
+    "y": 166,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 156,
+    "y": 251,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 156,
+    "y": 279,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 156,
+    "y": 307,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 156,
+    "y": 335,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 417,
+    "y": 82,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 417,
+    "y": 110,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 417,
+    "y": 139,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 417,
+    "y": 167,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 417,
+    "y": 251,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 417,
+    "y": 279,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 417,
+    "y": 307,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 417,
+    "y": 335,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 445,
+    "y": 82,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 445,
+    "y": 110,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 445,
+    "y": 139,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 445,
+    "y": 167,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 445,
+    "y": 251,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 445,
+    "y": 279,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 445,
+    "y": 307,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 445,
+    "y": 335,
+    "source": "grid_cell"
+  },
+  {
+    "text": "P1",
+    "x": 42,
+    "y": 79
+  },
+  {
+    "text": "P3",
+    "x": 418,
+    "y": 170
+  },
+  {
+    "text": "P2",
+    "x": 418,
+    "y": 339
+  }
+]

@@ -1,0 +1,123 @@
+[
+  {
+    "text": "A",
+    "x": 132,
+    "y": 163,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 132,
+    "y": 229,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 132,
+    "y": 294,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 132,
+    "y": 359,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 132,
+    "y": 425,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 132,
+    "y": 490,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 132,
+    "y": 555,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 132,
+    "y": 621,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1164,
+    "y": 163,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1164,
+    "y": 229,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1164,
+    "y": 294,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 1164,
+    "y": 359,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 1164,
+    "y": 425,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 1164,
+    "y": 490,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 1164,
+    "y": 555,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 1164,
+    "y": 621,
+    "source": "grid_cell"
+  },
+  {
+    "text": "P1",
+    "x": 94,
+    "y": 194
+  },
+  {
+    "text": "AWG14",
+    "x": 262,
+    "y": 181
+  },
+  {
+    "text": "AWG14",
+    "x": 262,
+    "y": 315
+  },
+  {
+    "text": "AWG14",
+    "x": 262,
+    "y": 624
+  },
+  {
+    "text": "P2",
+    "x": 1098,
+    "y": 194
+  }
+]

@@ -1,0 +1,129 @@
+[
+  {
+    "text": "A",
+    "x": 125,
+    "y": 196,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 125,
+    "y": 245,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 125,
+    "y": 294,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 125,
+    "y": 343,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 125,
+    "y": 393,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 125,
+    "y": 443,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1675,
+    "y": 196,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 1675,
+    "y": 245,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1675,
+    "y": 294,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 1675,
+    "y": 343,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1675,
+    "y": 393,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 1675,
+    "y": 443,
+    "source": "grid_cell"
+  },
+  {
+    "text": "P1",
+    "x": 42,
+    "y": 80
+  },
+  {
+    "text": "28V-",
+    "x": 607,
+    "y": 207
+  },
+  {
+    "text": "28V-",
+    "x": 607,
+    "y": 304
+  },
+  {
+    "text": "28V-",
+    "x": 607,
+    "y": 402
+  },
+  {
+    "text": "P2",
+    "x": 1828,
+    "y": 106
+  },
+  {
+    "text": "28V",
+    "x": 950,
+    "y": 248
+  },
+  {
+    "text": "28V RTN",
+    "x": 950,
+    "y": 286
+  },
+  {
+    "text": "28V",
+    "x": 947,
+    "y": 330
+  },
+  {
+    "text": "28V RTN",
+    "x": 950,
+    "y": 368
+  },
+  {
+    "text": "28V",
+    "x": 947,
+    "y": 410
+  },
+  {
+    "text": "28V RTN",
+    "x": 950,
+    "y": 448
+  }
+]

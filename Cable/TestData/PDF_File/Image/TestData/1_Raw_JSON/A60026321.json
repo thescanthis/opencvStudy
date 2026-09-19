@@ -1,0 +1,243 @@
+[
+  {
+    "text": "E",
+    "x": 251,
+    "y": 179,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 251,
+    "y": 222,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 251,
+    "y": 266,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 251,
+    "y": 309,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 251,
+    "y": 569,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 251,
+    "y": 612,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 251,
+    "y": 655,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 251,
+    "y": 699,
+    "source": "grid_cell"
+  },
+  {
+    "text": "J",
+    "x": 251,
+    "y": 959,
+    "source": "grid_cell"
+  },
+  {
+    "text": "K",
+    "x": 251,
+    "y": 1002,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 415,
+    "y": 200,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 415,
+    "y": 244,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 415,
+    "y": 287,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 415,
+    "y": 590,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 415,
+    "y": 633,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 415,
+    "y": 677,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 415,
+    "y": 980,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 415,
+    "y": 1145,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 454,
+    "y": 200,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 454,
+    "y": 244,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 454,
+    "y": 287,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 454,
+    "y": 590,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 454,
+    "y": 633,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 454,
+    "y": 677,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 454,
+    "y": 980,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 454,
+    "y": 1028,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D38999/46FC98PN",
+    "x": 87,
+    "y": 97
+  },
+  {
+    "text": "P1",
+    "x": 181,
+    "y": 157
+  },
+  {
+    "text": "28V",
+    "x": 764,
+    "y": 169
+  },
+  {
+    "text": "28V R",
+    "x": 764,
+    "y": 206
+  },
+  {
+    "text": "28V",
+    "x": 764,
+    "y": 545
+  },
+  {
+    "text": "28V R",
+    "x": 764,
+    "y": 582
+  },
+  {
+    "text": "28V",
+    "x": 764,
+    "y": 861
+  },
+  {
+    "text": "28V R",
+    "x": 764,
+    "y": 897
+  },
+  {
+    "text": "28V RTN",
+    "x": 814,
+    "y": 234
+  },
+  {
+    "text": "MS27467T11F5SA",
+    "x": 1207,
+    "y": 89
+  },
+  {
+    "text": "P3",
+    "x": 1306,
+    "y": 121
+  },
+  {
+    "text": "A",
+    "x": 1306,
+    "y": 196
+  },
+  {
+    "text": "B",
+    "x": 1306,
+    "y": 236
+  },
+  {
+    "text": "C",
+    "x": 1306,
+    "y": 275
+  },
+  {
+    "text": "D",
+    "x": 1306,
+    "y": 315
+  },
+  {
+    "text": "28V RTN",
+    "x": 814,
+    "y": 579
+  },
+  {
+    "text": "P2",
+    "x": 1306,
+    "y": 542
+  }
+]

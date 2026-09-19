@@ -1,0 +1,60 @@
+[
+  {
+    "text": "A",
+    "x": 560,
+    "y": 747,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 560,
+    "y": 942,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 560,
+    "y": 1137,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 560,
+    "y": 1332,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 3371,
+    "y": 747,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 3371,
+    "y": 942,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 3371,
+    "y": 1137,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 3371,
+    "y": 1332,
+    "source": "grid_cell"
+  },
+  {
+    "text": "J20",
+    "x": 518,
+    "y": 303
+  },
+  {
+    "text": "J5",
+    "x": 3390,
+    "y": 333
+  }
+]

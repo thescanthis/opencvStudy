@@ -1,0 +1,163 @@
+[
+  {
+    "text": "A",
+    "x": 153,
+    "y": 192,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 153,
+    "y": 262,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 153,
+    "y": 333,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 153,
+    "y": 403,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 153,
+    "y": 473,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 153,
+    "y": 543,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 153,
+    "y": 613,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 153,
+    "y": 684,
+    "source": "grid_cell"
+  },
+  {
+    "text": "A",
+    "x": 1261,
+    "y": 192,
+    "source": "grid_cell"
+  },
+  {
+    "text": "B",
+    "x": 1261,
+    "y": 262,
+    "source": "grid_cell"
+  },
+  {
+    "text": "C",
+    "x": 1261,
+    "y": 333,
+    "source": "grid_cell"
+  },
+  {
+    "text": "D",
+    "x": 1261,
+    "y": 403,
+    "source": "grid_cell"
+  },
+  {
+    "text": "E",
+    "x": 1261,
+    "y": 473,
+    "source": "grid_cell"
+  },
+  {
+    "text": "F",
+    "x": 1261,
+    "y": 543,
+    "source": "grid_cell"
+  },
+  {
+    "text": "G",
+    "x": 1261,
+    "y": 613,
+    "source": "grid_cell"
+  },
+  {
+    "text": "H",
+    "x": 1261,
+    "y": 684,
+    "source": "grid_cell"
+  },
+  {
+    "text": "P1",
+    "x": 42,
+    "y": 278
+  },
+  {
+    "text": "AWG14",
+    "x": 580,
+    "y": 278
+  },
+  {
+    "text": "AWG14",
+    "x": 600,
+    "y": 439
+  },
+  {
+    "text": "AWG14",
+    "x": 608,
+    "y": 592
+  },
+  {
+    "text": "A",
+    "x": 1124,
+    "y": 218
+  },
+  {
+    "text": "B",
+    "x": 1124,
+    "y": 290
+  },
+  {
+    "text": "C",
+    "x": 1124,
+    "y": 365
+  },
+  {
+    "text": "D",
+    "x": 1124,
+    "y": 438
+  },
+  {
+    "text": "E",
+    "x": 1124,
+    "y": 510
+  },
+  {
+    "text": "F",
+    "x": 1124,
+    "y": 586
+  },
+  {
+    "text": "G",
+    "x": 1124,
+    "y": 659
+  },
+  {
+    "text": "H",
+    "x": 1124,
+    "y": 731
+  },
+  {
+    "text": "P2",
+    "x": 1202,
+    "y": 280
+  }
+]
